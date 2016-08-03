@@ -31,3 +31,22 @@ func (this *BookDetailController) SearchBookDetail() {
 	this.Data["json"] = &rt
 	this.ServeJSON()
 }
+
+func (this *BookDetailController) GetClcInfo() {
+	var rt models.Result
+	var clc = this.GetString(":clc_sort_num")
+
+	err, rtv := services.GetClcInfo(clc)
+	if err != nil {
+		rt.Msg = "o_o"
+		beego.Info(err)
+		this.Ctx.ResponseWriter.WriteHeader(500)
+	} else {
+		rt.Msg = "^_^"
+		rt.Data = make([]models.Recs, 1)
+		rt.Data[0] = rtv
+	}
+
+	this.Data["json"] = &rt
+	this.ServeJSON()
+}

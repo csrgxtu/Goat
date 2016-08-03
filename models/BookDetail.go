@@ -19,4 +19,10 @@ type (
 		CreateTime string `json:"createtime" bson:"createtime"`
 		UpdateTime string `json:"updatetime" bson:"updatetime"`
 	}
+
+	Classification struct {
+		Id bson.ObjectId `json:"id" bson:"_id,omitempty"`
+		ClcSortNum string `json:"clc_sort_num" bson:"clc_sort_num"`
+		Description string `json:"description" bson:"description"`
+	}
 )

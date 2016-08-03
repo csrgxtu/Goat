@@ -7,4 +7,5 @@ import (
 
 func init() {
 	beego.Router("/goat/bookdetail/:query", &controllers.BookDetailController{}, "get:SearchBookDetail")
+	beego.Router("/goat/classification/:clc_sort_num", &controllers.BookDetailController{}, "get:GetClcInfo")
 }
