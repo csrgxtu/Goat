@@ -11,7 +11,7 @@ type BookDetailController struct {
 }
 
 /**
- * 根据用户id搜索相关的scan image 或者获取某一个用户的ScanImage
+ * 根据书籍名称获取其信息
  */
 func (this *BookDetailController) SearchBookDetail() {
 	var rt models.Result
