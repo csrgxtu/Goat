@@ -23,7 +23,8 @@
     </div><!-- /.row -->
 
     <div id="content">
-
+    </div>
+    <div id="clc">
     </div>
 
     <script>
@@ -40,8 +41,32 @@
             if (xhr.status === 200) {
               console.debug(json);
               SetContent(json);
+              GetClcInfo(json.data[0].clc_sort_num);
             } else {
               alert("找不到");
+              console.error(xhr.statusText);
+            }
+          }
+        };
+
+        xhr.onerror = function(e) {
+          console.error(xhr.statusText);
+        };
+        xhr.send(null);
+      }
+
+      function GetClcInfo(clc_sort_num) {
+        var url = "/goat/classification/" + clc_sort_num;
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.onload = function(e) {
+          if (xhr.readyState === 4) {
+            var json = JSON.parse(xhr.responseText);
+            if (xhr.status === 200) {
+              console.debug(json);
+              SetClcContent(json);
+            } else {
+              alert("找不到CLC信息");
               console.error(xhr.statusText);
             }
           }
@@ -59,8 +84,16 @@
         document.getElementById('content').innerHTML = htmlSnippet;
       }
 
+      function SetClcContent(json) {
+        var htmlSnippet = '<center>';
+        htmlSnippet += '<h5>' + json.data[0].clc_sort_num + ':' + json.data[0].description + '</h5>';
+        htmlSnippet += '</center>';
+        document.getElementById('clc').innerHTML = htmlSnippet;
+      }
+
       function CleanContent() {
         document.getElementById('content').innerHTML = null;
+        document.getElementById('clc').innerHTML = null;
       }
     </script>
 
