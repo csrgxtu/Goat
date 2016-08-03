@@ -1,10 +1,10 @@
 package routers
 
 import (
-	"tmp/Goat/controllers"
+	"Goat/controllers"
 	"github.com/astaxie/beego"
 )
 
 func init() {
-    beego.Router("/", &controllers.MainController{})
+	beego.Router("/goat/bookdetail/:query", &controllers.BookDetailController{}, "get:SearchBookDetail")
 }
