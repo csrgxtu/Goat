@@ -8,7 +8,8 @@
 from pymongo import MongoClient
 
 # connect to mongodb
-client = MongoClient('mongodb://192.168.100.2:27017/bookshelf')
+# client = MongoClient('mongodb://192.168.100.2:27017/bookshelf')
+client = MongoClient('mongodb://rio:VFZPhT7y@192.168.200.22:27017/bookshelf')
 db = client['bookshelf']
 cc = db['classification']
 
