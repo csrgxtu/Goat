@@ -8,6 +8,7 @@ import (
 type (
 	BookDetail struct {
 		Id bson.ObjectId `json:"id" bson:"_id,omitempty"`
+		WukongDocId uint64 `json:"wukongdocid" bson:"wukongdocid"`
 		Isbn string `json:"isbn" bson:"isbn"`
 		Title string `json:"title" bson:"title"`
 		Author string `json:"author" bson:"author"`
