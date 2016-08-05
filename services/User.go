@@ -27,6 +27,24 @@ func GetUserInfoById(id string) (err error, rtv models.WechatUsers) {
   return
 }
 
+// save a wechat user
+func CreateWechatUser(user models.WechatUsers) (err error, rtv string){
+  if CheckAndReconnect() != nil {
+    return
+  }
+
+  user.Id = bson.NewObjectId()
+  err = Session.DB(DB).C(WechatUsersCollection).Insert(user)
+  if err != nil {
+    beego.Info(err)
+    err = errors.New("Server Internal Error")
+    return
+  }
+  rtv = user.Id.Hex()
+
+  return
+}
+
 // 如果用户搜索命中一本书，则添加到他的相关书籍里面
 func AppendBookDetailId(bid, userid string) (err error) {
   if CheckAndReconnect() != nil {
