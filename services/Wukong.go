@@ -32,13 +32,6 @@ func Indexer() (err error, rtv int64) {
     return
   }
 
-  // 初始化
-  // searcher.Init(types.EngineInitOptions{
-  //   SegmenterDictionaries: "./data/dictionary.txt", StopTokenFile: "./data/stop_tokens.txt", UsePersistentStorage: true, PersistentStorageFolder: "./data", PersistentStorageShards: 20})
-
-  // defer searcher.Close()
-
-
   var Book models.BookDetail
   Iterator := Session.DB(DB).C(WukongBookDetailCollection).Find(nil).Iter()
   for Iterator.Next(&Book) {
@@ -55,7 +48,7 @@ func Indexer() (err error, rtv int64) {
   return
 }
 
-func Searcher(query string) (err error, rtv models.BookDetail) {
+func Searcher(query string) (err error, rtv models.BookDetail, rtvc models.Classification) {
   if CheckAndReconnect() != nil {
     return
   }
@@ -74,6 +67,9 @@ func Searcher(query string) (err error, rtv models.BookDetail) {
     err = errors.New("Server Internal Error")
     return
   }
+
+  // 在classification里面寻找主文案，标签云
+  err, rtvc = GetClcInfo(rtv.ClcSortNum)
 
   return
 }

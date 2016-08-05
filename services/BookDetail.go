@@ -19,9 +19,6 @@ func SearchBookdetail(query string) (err error, rtv models.BookDetail) {
   var criteria = bson.M{"title": query}
   err = Session.DB(DB).C(BookDetailCollection).Find(criteria).One(&rtv)
   if err != nil {
-    // beego.Info(err)
-    // err = errors.New("Server Internal Error")
-    // return
     criteria = bson.M{"title": bson.M{"$regex": bson.RegEx{".*" + query + "*.", ""}}}
     err = Session.DB(DB).C(BookDetailCollection).Find(criteria).One(&rtv)
     if err != nil {

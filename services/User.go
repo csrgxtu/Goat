@@ -27,6 +27,34 @@ func GetUserInfoById(id string) (err error, rtv models.WechatUsers) {
   return
 }
 
+// 如果用户搜索命中一本书，则添加到他的相关书籍里面
+func AppendBookDetailId(bid, userid string) (err error) {
+  if CheckAndReconnect() != nil {
+    return
+  }
+
+  var wechatUsers models.WechatUsers
+  var criteria = bson.M{"_id": bson.ObjectIdHex(userid)}
+  err = Session.DB(DB).C(WechatUsersCollection).Find(criteria).One(&wechatUsers)
+  if err != nil {
+    beego.Info(err)
+    err = errors.New("Server Internal Error")
+    return
+  }
+
+  bids := wechatUsers.BookDetailIds
+  bids[len(bids)] = bid
+  var change = bson.M{"$set": bson.M{"bookdetailids": bids}}
+  err = Session.DB(DB).C(WechatUsersCollection).Update(criteria, change)
+  if err != nil {
+    beego.Info(err)
+    err = errors.New("Server Internal Error")
+    return
+  }
+  
+  return
+}
+
 func GetSimiliar(id string) (err error, rtv []models.WechatUsers) {
   if CheckAndReconnect() != nil {
     return

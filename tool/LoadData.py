@@ -32,7 +32,8 @@ for data in RAW_DATA:
     document = {
         "clc_sort_num": data.split(',')[0],
         "description": data.split(',')[1],
-        "tags": Tags
+        "tags": Tags,
+        "main": "我就憋着不说话"
     }
     id = cc.insert_one(document).inserted_id
     print id

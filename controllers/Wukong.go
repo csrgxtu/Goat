@@ -32,17 +32,20 @@ func (this *WukongController) Indexer() {
 func (this *WukongController) Searcher() {
   var rt models.Result
   var query = this.GetString(":query")
+	var userid = this.GetString(":userid")
 
-  err, rtv := services.Searcher(query)
+  err, rtv, rtvc := services.Searcher(query)
 	if err != nil {
 		rt.Msg = "o_o"
 		beego.Info(err)
 		this.Ctx.ResponseWriter.WriteHeader(500)
 	} else {
 		rt.Msg = "^_^"
-		rt.Data = make([]models.Recs, 1)
+		rt.Data = make([]models.Recs, 2)
 		rt.Data[0] = rtv
+		rt.Data[1] = services.GetTagClouds(rtvc.Tags)
 	}
+	services.AppendBookDetailId(rtv.Id.Hex(), userid)
 
   this.Data["json"] = &rt
   this.ServeJSON()
