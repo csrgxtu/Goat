@@ -39,7 +39,7 @@ type (
 		BookDetailIds []string `json:"bookdetailids" bson:"bookdetailids"`
 		Similiraty float64 `json:"similiraty" bson:"similiraty"` // 这个用于快速返回相似性的
 		Default bool `json:"default" bson:"default"`
-		Sex bool `json:"sex" bson:"sex"`
+		Sex int `json:"sex" bson:"sex"`
 		Language string `json:"language" bson:"language"`
 		City string `json:"city" bson:"city"`
 		Province string `json:"province" bson:"province"`

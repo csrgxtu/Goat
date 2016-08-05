@@ -65,7 +65,7 @@ func GetSimiliar(id string) (err error, rtv []models.WechatUsers) {
 
   // 查询共同书籍用户
   var wechatUsers []models.WechatUsers
-  criteria = bson.M{"bookdetailids": bson.M{"$in": wechatUser.BookDetailIds}}
+  criteria = bson.M{"bookdetailids": bson.M{"$in": wechatUser.BookDetailIds}, "_id": bson.M{"$ne": bson.ObjectIdHex(id)}}
   err = Session.DB(DB).C(WechatUsersCollection).Find(criteria).All(&wechatUsers)
   if err != nil {
     // 找不到
@@ -86,27 +86,77 @@ func GetSimiliar(id string) (err error, rtv []models.WechatUsers) {
   }
   // 对上述结果进行排序，取出前三,  否则去找默认用户，下面的代码之所以这么长，是因为产品的奇怪需求
   sort.Sort(tmpStruct)
+  beego.Info(tmpStruct)
   if len(tmpStruct) == 0 {
     // 取三个异性用户
-    for i := 0; i < 3; i++ {
-      err = Session.DB(DB).C(WechatUsersCollection).Find(criteria).One(&rtv[i])
-      if err != nil {
-        beego.Info(err)
-        err = errors.New("Server Internal Error")
-        return
-      }
+    beego.Info(wechatUser.Sex)
+    criteria = bson.M{"sex": bson.M{"$ne": wechatUser.Sex}, "default": true}
+    err = Session.DB(DB).C(WechatUsersCollection).Find(criteria).All(&rtv)
+    if err != nil {
+      beego.Info(err)
+      err = errors.New("Server Internal Error")
+      return
     }
     rtv[0].Similiraty = 0.98
     rtv[1].Similiraty = 0.96
     rtv[2].Similiraty = 0.92
+    rtv = rtv[0:3]
   } else if len(tmpStruct) == 1 {
     // 取两个异性用户
+    criteria = bson.M{"sex": bson.M{"$ne": wechatUser.Sex}, "default": true}
+    err = Session.DB(DB).C(WechatUsersCollection).Find(criteria).All(&rtv)
+    if err != nil {
+      beego.Info(err)
+      err = errors.New("Server Internal Error")
+      return
+    }
+    rtv[0].Similiraty = 0.98
+    rtv[1].Similiraty = 0.96
+    rtv = rtv[0:2]
+    var tmpWechatUser models.WechatUsers
+    criteria = bson.M{"_id": bson.ObjectIdHex(tmpStruct[0].Key)}
+    err = Session.DB(DB).C(WechatUsersCollection).Find(criteria).One(&tmpWechatUser)
+    if err != nil {
+      beego.Info(err)
+      err = errors.New("Server Internal Error")
+      return
+    }
+    tmpWechatUser.Similiraty = float64(tmpStruct[0].Value) / float64(len(wechatUser.BookDetailIds))
+    rtv = append(rtv, tmpWechatUser)
   } else if len(tmpStruct) == 2 {
     // 取一个异性用户
+    criteria = bson.M{"sex": bson.M{"$ne": wechatUser.Sex}, "default": true}
+    err = Session.DB(DB).C(WechatUsersCollection).Find(criteria).All(&rtv)
+    if err != nil {
+      beego.Info(err)
+      err = errors.New("Server Internal Error")
+      return
+    }
+    rtv[0].Similiraty = 0.98
+    rtv = rtv[0:1]
+
+    var tmpWechatUsers [2]models.WechatUsers
+    err, tmpWechatUsers[0] = GetUserInfoById(tmpStruct[0].Key)
+    if err != nil {
+      beego.Info(err)
+      err = errors.New("Server Internal Error")
+      return
+    }
+    err, tmpWechatUsers[1] = GetUserInfoById(tmpStruct[1].Key)
+    if err != nil {
+      beego.Info(err)
+      err = errors.New("Server Internal Error")
+      return
+    }
+    tmpWechatUsers[0].Similiraty = float64(tmpStruct[0].Value) / float64(len(wechatUser.BookDetailIds))
+    tmpWechatUsers[1].Similiraty = float64(tmpStruct[1].Value) / float64(len(wechatUser.BookDetailIds))
+    rtv = append(rtv, tmpWechatUsers[1])
+    rtv = append(rtv, tmpWechatUsers[0])
   } else if len(tmpStruct) >= 3 {
     // 返回这三个用户
+    rtv = make([]models.WechatUsers, 3)
     for i := 0; i < 3; i++ {
-      rtv[i].Id = bson.ObjectIdHex(tmpStruct[i].Key)
+      err, rtv[i] = GetUserInfoById(tmpStruct[i].Key)
       rtv[i].Similiraty = float64(tmpStruct[i].Value) / float64(len(wechatUser.BookDetailIds))
     }
   }

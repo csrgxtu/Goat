@@ -32,9 +32,12 @@ Users = uc.find({'user_id': {'$in': UserIds}})
 # second, insert to wechatusers
 for user in Users:
     data = {}
-    data['user_name'] = user['user_name']
-    data['sex'] = user['sex']
-    data['avatar'] = user['avatar']
+    data['nickname'] = user['user_name']
+    if user['sex'] == 'female':
+        data['sex'] = 0
+    else:
+        data['sex'] = 1
+    data['headimgurl'] = user['avatar']
     data['default'] = True
 
     id = wc.insert_one(data).inserted_id
