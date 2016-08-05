@@ -25,3 +25,14 @@ func GetUserInfoById(id string) (err error, rtv models.WechatUsers) {
 
   return
 }
+
+func GetSimiliar(id string) (err error, rtv []models.WechatUsers) {
+  if CheckAndReconnect() != nil {
+    return
+  }
+
+  // do the similiar calculation, if cant find any, use the default
+
+
+  return
+}

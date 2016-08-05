@@ -28,16 +28,27 @@ type (
 		Tags []string `json:"tags" bson:"tags"`
 	}
 
+	// 微信授权的用户
 	WechatUsers struct {
 		Id bson.ObjectId `json:"id" bson:"_id,omitempty"`
 		OpenId string `json:"openid" bson:"openid"`
-		NickName string `json:"nickname" bson:"nickname"`
+		UserId string `json:"user_id" bson:"user_id"`
+		UserName string `json:"user_name" bson:"nickname"`
+		Avatar string `json:"avatar" bson:"headimgurl"`
+		BookDetailIds []string `json:"bookdetailids" bson:"bookdetailids"`
+
 		Sex bool `json:"sex" bson:"sex"`
 		Language string `json:"language" bson:"language"`
 		City string `json:"city" bson:"city"`
 		Province string `json:"province" bson:"province"`
 		Country string `json:"country" bson:"country"`
-		HeadImgUrl string `json:"headimgurl" bson:"headimgurl"`
-		BookDetailIds []string `json:"bookdetailids" bson:"bookdetailids"`
+	}
+
+	// 美丽阅读的用户
+	BRUsers struct {
+		Id bson.ObjectId `json:"id" bson:"_id,omitempty"`
+		UserId string `json:"user_id" bson:"user_id"`
+		UserName string `json:"user_name" bson:"nickname"`
+		Avatar string `json:"avatar" bson:"headimgurl"`
 	}
 )

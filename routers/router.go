@@ -12,5 +12,6 @@ func init() {
 	beego.Router("/goat/searcher/:query", &controllers.WukongController{}, "get:Searcher")
 
 	// 用户信息获取
-	// beego.Router("/goat/users/:id", &controllers.UserController{}, "get:GetUserInfoById()")
+	beego.Router("/goat/users/:id", &controllers.UserController{}, "get:GetUserInfoById")
+	beego.Router("/goat/users/similiar/:id", &controllers.UserController{}, "get:GetSimiliar")
 }
