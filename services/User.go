@@ -33,6 +33,15 @@ func CreateWechatUser(user models.WechatUsers) (err error, rtv string){
     return
   }
 
+  // first, check if wechat user already in
+  var wechatUser models.WechatUsers
+  var criteria = bson.M{"openid": user.OpenId}
+  err = Session.DB(DB).C(WechatUsersCollection).Find(criteria).One(&wechatUser)
+  if err == nil {
+    rtv = wechatUser.Id.Hex()
+    return
+  }
+
   user.Id = bson.NewObjectId()
   err = Session.DB(DB).C(WechatUsersCollection).Insert(user)
   if err != nil {
