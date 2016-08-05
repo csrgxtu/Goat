@@ -8,19 +8,19 @@
 from pymongo import MongoClient
 
 # connect to mongodb
-client = MongoClient('mongodb://127.0.0.1:27017/bookshelf')
-# client = MongoClient('mongodb://192.168.100.2:27017/bookshelf')
+# client = MongoClient('mongodb://127.0.0.1:27017/bookshelf')
+client = MongoClient('mongodb://192.168.100.2:27017/bookshelf')
 # client = MongoClient('mongodb://rio:VFZPhT7y@192.168.200.22:27017/bookshelf')
 db = client['bookshelf']
 cc = db['classification']
 
 RAW_DATA = []
-with open('../data/clc.csv') as F:
+with open('test.csv') as F:
     for line in F:
         RAW_DATA.append(line.strip('\n\r'))
 
 Tags = []
-with open('../data/tag.csv') as F:
+with open('tag.csv') as F:
     for line in F:
         Tags.append(line.strip('\n'))
 
