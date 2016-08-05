@@ -25,7 +25,7 @@ type (
 	WebAuth_WechatUser struct {
 		Id bson.ObjectId `json:"id"`
 		OpenId string `json:"openid"`
-		UserName string `json:"user_name"`
+		UserName string `json:"nickname"`
     Sex int `json:"sex"`
     Province string `json:"province"`
     City string `json:"city"`

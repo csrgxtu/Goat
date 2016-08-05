@@ -11,7 +11,7 @@ import (
 
 // 根据ｃｏｄｅ获取ｔｏｋｅｎ
 func WechatWebAuthGetAccessToken(code string) (err error, rtv models.WebAuth_AcessToken) {
-  var tokenUrl = beego.AppConfig.String("Wechat_WebAuth_Redirect") + code
+  var tokenUrl = beego.AppConfig.String("Wechat_WebAuth_AcessToken") + code
 
   request := gorequest.New()
   _, body, errs := request.Get(tokenUrl).End()

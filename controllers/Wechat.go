@@ -27,7 +27,7 @@ func (this *WechatController) WebAuth() {
   var code = this.GetString("code")
 
   // 授权失败，没有code，无法继续后面的拉取用户信息操作
-  if len(code) > 0 {
+  if len(code) == 0 {
     rt.Msg = "o_o"
 		this.Ctx.ResponseWriter.WriteHeader(500)
     this.Data["json"] = &rt
@@ -45,10 +45,10 @@ func (this *WechatController) WebAuth() {
   }
 
   // get wechat user Info
-  err, rtva := services.WechatWebAuthGetWechatUserInfo(rtv.ACCESS_TOKEN, rtv.OPENID, "zh_CN")
-  if err != nil {
+  erra, rtva := services.WechatWebAuthGetWechatUserInfo(rtv.ACCESS_TOKEN, rtv.OPENID, "zh_CN")
+  if erra != nil {
     rt.Msg = "o_o"
-    beego.Info(err)
+    beego.Info(erra)
     this.Ctx.ResponseWriter.WriteHeader(500)
     this.Data["json"] = &rt
     this.ServeJSON()
@@ -64,10 +64,10 @@ func (this *WechatController) WebAuth() {
   user.Province = rtva.Province
   user.City = rtva.City
   user.Country = rtva.Country
-  err, rtvb := services.CreateWechatUser(user)
-  if err != nil {
+  errb, rtvb := services.CreateWechatUser(user)
+  if errb != nil {
     rt.Msg = "o_o"
-    beego.Info(err)
+    beego.Info(errb)
     this.Ctx.ResponseWriter.WriteHeader(500)
     this.Data["json"] = &rt
     this.ServeJSON()
