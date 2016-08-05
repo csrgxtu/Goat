@@ -56,6 +56,9 @@
       }
 
       function GetClcInfo(clc_sort_num) {
+        if (!clc_sort_num) {
+          return
+        }
         var url = "/goat/classification/" + clc_sort_num;
         var xhr = new XMLHttpRequest();
         xhr.open("GET", url, true);
