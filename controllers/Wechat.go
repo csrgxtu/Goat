@@ -130,6 +130,7 @@ func (this *WechatController) Signature() {
     data.Timestamp = int64(timestamp)
     data.Signature = rtvc
     data.Url = url
+    data.AppId = beego.AppConfig.String("Wechat_APPID")
     rt.Data = make([]models.Recs, 1)
     rt.Data[0] = data
   }

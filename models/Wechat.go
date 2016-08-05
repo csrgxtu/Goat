@@ -52,5 +52,6 @@ type (
     Timestamp int64 `json:"timestamp"`
     Signature string `json:"signature"`
     Url string `json:"url"`
+    AppId string `json:"appid"`
   }
 )

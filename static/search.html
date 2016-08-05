@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>美丽阅读</title>
+
+    <link href="/static/libs/css/bootstrap.min.css" rel="stylesheet">
+
+  </head>
+  <body>
+    <center><h3>美丽阅读</h3></center>
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="input-group">
+          <span class="input-group-btn">
+            <button class="btn btn-info" type="button" onclick="Search()">搜索</button>
+          </span>
+          <input id="query" type="text" class="form-control" width="10px" placeholder="书籍名称">
+        </div><!-- /input-group -->
+      </div><!-- /.col-lg-6 -->
+    </div><!-- /.row -->
+
+    <div id="content">
+    </div>
+    <div id="clc">
+    </div>
+
+    <script>
+      function Search() {
+        CleanContent();
+        var query = document.getElementById('query').value;
+        console.log(query);
+        var url = "/goat/searcher/" + query;
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.onload = function(e) {
+          if (xhr.readyState === 4) {
+            var json = JSON.parse(xhr.responseText);
+            if (xhr.status === 200) {
+              console.debug(json);
+              SetContent(json);
+              GetClcInfo(json.data[0].clc_sort_num);
+            } else {
+              alert("找不到");
+              console.error(xhr.statusText);
+            }
+          }
+        };
+
+        xhr.onerror = function(e) {
+          console.error(xhr.statusText);
+        };
+        xhr.send(null);
+      }
+
+      function GetClcInfo(clc_sort_num) {
+        if (!clc_sort_num) {
+          return
+        }
+        var url = "/goat/classification/" + clc_sort_num;
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        xhr.onload = function(e) {
+          if (xhr.readyState === 4) {
+            var json = JSON.parse(xhr.responseText);
+            if (xhr.status === 200) {
+              console.debug(json);
+              SetClcContent(json);
+            } else {
+              alert("找不到CLC信息");
+              console.error(xhr.statusText);
+            }
+          }
+        };
+
+        xhr.onerror = function(e) {
+          console.error(xhr.statusText);
+        };
+        xhr.send(null);
+      }
+
+      function SetContent(json) {
+        var htmlSnippet = '<center><h5>' + json.data[0].clc_sort_num + '</h5>';
+        htmlSnippet += '<h5>' + json.data[0].title + '</h5></center>';
+        document.getElementById('content').innerHTML = htmlSnippet;
+      }
+
+      function SetClcContent(json) {
+        var htmlSnippet = '<center>';
+        htmlSnippet += '<h5>' + json.data[0].clc_sort_num + ':' + json.data[0].description + '</h5>';
+        htmlSnippet += '</center>';
+        document.getElementById('clc').innerHTML = htmlSnippet;
+      }
+
+      function CleanContent() {
+        document.getElementById('content').innerHTML = null;
+        document.getElementById('clc').innerHTML = null;
+      }
+    </script>
+
+    <script src="/static/libs/js/jquery.min.js"></script>
+    <script src="/static/libs/js/bootstrap.min.js"></script>
+  </body>
+</html>
