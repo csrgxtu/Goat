@@ -33,25 +33,15 @@ func AppendBookDetailId(bid, userid string) (err error) {
     return
   }
 
-  var wechatUsers models.WechatUsers
   var criteria = bson.M{"_id": bson.ObjectIdHex(userid)}
-  err = Session.DB(DB).C(WechatUsersCollection).Find(criteria).One(&wechatUsers)
-  if err != nil {
-    beego.Info(err)
-    err = errors.New("Server Internal Error")
-    return
-  }
-
-  bids := wechatUsers.BookDetailIds
-  bids[len(bids)] = bid
-  var change = bson.M{"$set": bson.M{"bookdetailids": bids}}
+  var change = bson.M{"$push": bson.M{"bookdetailids": bid}}
   err = Session.DB(DB).C(WechatUsersCollection).Update(criteria, change)
   if err != nil {
     beego.Info(err)
     err = errors.New("Server Internal Error")
     return
   }
-  
+
   return
 }
 
@@ -98,6 +88,17 @@ func GetSimiliar(id string) (err error, rtv []models.WechatUsers) {
   sort.Sort(tmpStruct)
   if len(tmpStruct) == 0 {
     // 取三个异性用户
+    for i := 0; i < 3; i++ {
+      err = Session.DB(DB).C(WechatUsersCollection).Find(criteria).One(&rtv[i])
+      if err != nil {
+        beego.Info(err)
+        err = errors.New("Server Internal Error")
+        return
+      }
+    }
+    rtv[0].Similiraty = 0.98
+    rtv[1].Similiraty = 0.96
+    rtv[2].Similiraty = 0.92
   } else if len(tmpStruct) == 1 {
     // 取两个异性用户
   } else if len(tmpStruct) == 2 {

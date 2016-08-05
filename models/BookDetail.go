@@ -25,6 +25,7 @@ type (
 		Id bson.ObjectId `json:"id" bson:"_id,omitempty"`
 		ClcSortNum string `json:"clc_sort_num" bson:"clc_sort_num"`
 		Description string `json:"description" bson:"description"`
+		Main string `json:"main" bson:"main"`
 		Tags []string `json:"tags" bson:"tags"`
 	}
 

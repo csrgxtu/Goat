@@ -16,17 +16,22 @@ type BookDetailController struct {
 func (this *BookDetailController) SearchBookDetail() {
 	var rt models.Result
 	var query = this.GetString(":query")
+	var userid = this.GetString(":userid")
 
-	err, rtv := services.SearchBookdetail(query)
+	err, rtv, rtvc := services.SearchBookdetail(query)
 	if err != nil {
 		rt.Msg = "o_o"
 		beego.Info(err)
 		this.Ctx.ResponseWriter.WriteHeader(500)
 	} else {
 		rt.Msg = "^_^"
-		rt.Data = make([]models.Recs, 1)
+		rt.Data = make([]models.Recs, 4)
 		rt.Data[0] = rtv
+		rt.Data[1] = rtvc.Main
+		rt.Data[2] = services.GetTagClouds(rtvc.Tags)
+		_, rt.Data[3] = services.GetUserInfoById(userid)
 	}
+	services.AppendBookDetailId(rtv.Id.Hex(), userid)
 
 	this.Data["json"] = &rt
 	this.ServeJSON()

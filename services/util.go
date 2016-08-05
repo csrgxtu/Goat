@@ -1,87 +1,101 @@
 package services
 
-import "math/rand"
+import (
+	"github.com/astaxie/beego"
+	"math/rand"
+)
+
+func getTagsByLength(tags []string, length int) (Tags []string) {
+	for ix, value := range tags {
+		if len(value) == length {
+			Tags[ix] = value
+		}
+	}
+
+	return
+}
 
 // 返回过一集需要的标签云
 func GetTagClouds(tags []string) (Tags [][]string) {
-	var a2d []string // 2个长度的标签
-	var a3d []string
-	var a4d []string
-	var a5d []string
-	var a6d []string
-
-	var idx2 = 0
-	var idx3 = 0
-	var idx4 = 0
-	var idx5 = 0
-	var idx6 = 0
+	var a2d = []string{""} // 2个长度的标签
+	var a3d = []string{""}
+	var a4d = []string{""}
+	var a5d = []string{""}
+	var a6d = []string{""}
 
 	for _, value := range tags {
-		if len(value) == 2 {
-			a2d[idx2] = value
-			idx2 = idx2 + 1
-		} else if len(value) == 3 {
-			a3d[idx3] = value
-			idx3 = idx3 + 1
-		} else if len(value) == 4 {
-			a4d[idx4] = value
-			idx4 = idx4 + 1
-		} else if len(value) == 5 {
-			a5d[idx5] = value
-			idx5 = idx5 + 1
-		} else if len(value) == 6 {
-			a6d[idx6] = value
-			idx6 = idx6 + 1
+		if len(value) == 6 {
+			a2d = append(a2d, value)
+		} else if len(value) == 9 {
+			a3d = append(a3d, value)
+		} else if len(value) == 12 {
+			a4d = append(a4d, value)
+		} else if len(value) == 15 {
+			a5d = append(a5d, value)
+		} else if len(value) == 18 {
+			a6d = append(a6d, value)
 		}
 	}
 
 	// 打乱各个数组
-	a2dn := make([]string, len(a2d))
-	perm := rand.Perm(len(a2d))
+	a2dn := make([]string, len(a2d[1:]))
+	perm := rand.Perm(len(a2d[1:]))
 	for i, v := range perm {
-	    a2dn[v] = a2d[i]
+	    a2dn[v] = a2d[i + 1]
 	}
 
-	a3dn := make([]string, len(a3d))
-	perm = rand.Perm(len(a3d))
+
+	a3dn := make([]string, len(a3d[1:]))
+	perm = rand.Perm(len(a3d[1:]))
 	for i, v := range perm {
-			a3dn[v] = a3d[i]
+			a3dn[v] = a3d[i + 1]
 	}
 
-	a4dn := make([]string, len(a4d))
-	perm = rand.Perm(len(a4d))
+	a4dn := make([]string, len(a4d[1:]))
+	perm = rand.Perm(len(a4d[1:]))
 	for i, v := range perm {
-			a4dn[v] = a4d[i]
+			a4dn[v] = a4d[i + 1]
 	}
 
-	a5dn := make([]string, len(a5d))
-	perm = rand.Perm(len(a5d))
+	a5dn := make([]string, len(a5d[1:]))
+	perm = rand.Perm(len(a5d[1:]))
 	for i, v := range perm {
-			a5dn[v] = a5d[i]
+			a5dn[v] = a5d[i + 1]
 	}
 
-	a6dn := make([]string, len(a6d))
-	perm = rand.Perm(len(a6d))
+	beego.Info("here")
+	a6dn := make([]string, len(a6d[1:]))
+	perm = rand.Perm(len(a6d[1:]))
 	for i, v := range perm {
-			a6dn[v] = a6d[i]
+			a6dn[v] = a6d[i + 1]
 	}
 
+	var data2d = []string{""}
+	for i := 0; i < 15; i++ {
+		data2d = append(data2d, a2dn[i])
+	}
+	var data3d = []string{""}
+	for i := 0; i < 5; i++ {
+		data3d = append(data3d, a3dn[i])
+	}
+	var data4d = []string{""}
+	for i := 0; i < 5; i++ {
+		data4d = append(data4d, a4dn[i])
+	}
+	var data5d = []string{""}
+	for i := 0; i < 3; i++ {
+		data5d = append(data5d, a5dn[i])
+	}
+	var data6d = []string{a6dn[0]}
 
-	for i := 0; i < 9; i++ {
-		Tags[0][i] = a2dn[i]
-	}
-	for i := 0; i < 2; i++ {
-		Tags[1][i] = a3dn[i]
-	}
-	for i := 0; i < 7; i++ {
-		Tags[2][i] = a4dn[i]
-	}
-	for i := 0; i < 6; i++ {
-		Tags[3][i] = a5dn[i]
-	}
-	Tags[4][0] = a6dn[0]
+	Tags = make([][]string, 5)
+	Tags[0] = data2d[1:]
+	Tags[1] = data3d[1:]
+	Tags[2] = data4d[1:]
+	Tags[3] = data5d[1:]
+	Tags[4] = data6d
 
-	return Tags
+	return
 }
 
 type SortStruct struct {

@@ -11,7 +11,7 @@ import (
 var BookDetailCollection = beego.AppConfig.String("BookDetailCollection")
 var ClassificationCollection = beego.AppConfig.String("ClassificationCollection")
 
-func SearchBookdetail(query string) (err error, rtv models.BookDetail) {
+func SearchBookdetail(query string) (err error, rtv models.BookDetail, rtvc models.Classification) {
   if CheckAndReconnect() != nil {
     return
   }
@@ -28,6 +28,9 @@ func SearchBookdetail(query string) (err error, rtv models.BookDetail) {
     }
   }
 
+  // 在classification里面寻找主文案，标签云
+  err, rtvc = GetClcInfo(rtv.ClcSortNum)
+
   return
 }
 
@@ -41,7 +44,7 @@ func GetClcInfo(clc string) (err error, rtv models.Classification) {
   }
 
   for i := 0; i < len(clc); i++ {
-    beego.Info(clc[0:len(clc) - i])
+    // beego.Info(clc[0:len(clc) - i])
     var criteria = bson.M{"clc_sort_num": clc[0:len(clc) - i]}
     err = Session.DB(DB).C(ClassificationCollection).Find(criteria).One(&rtv)
     if err == nil {
