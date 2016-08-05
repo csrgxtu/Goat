@@ -14,4 +14,7 @@ func init() {
 	// 用户信息获取
 	beego.Router("/goat/users/:id", &controllers.UserController{}, "get:GetUserInfoById")
 	beego.Router("/goat/users/similiar/:id", &controllers.UserController{}, "get:GetSimiliar")
+
+  // wechat
+  beego.Router("/goat/wechat/verify", &controllers.WechatController{}, "get:Verify")
 }

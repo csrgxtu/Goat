@@ -1,0 +1,16 @@
+{
+  "uploadOnSave": true,
+  "useAtomicWrites": true,
+  "deleteLocal": false,
+  "hostname": "devs1",
+  "port": "22",
+  "target": "/home/liqiang/Documents/Gosrc/src/Goat",
+  "ignore": [
+    ".remote-sync.json",
+    ".git/**"
+  ],
+  "username": "liqiang",
+  "keyfile": "/home/archer/.ssh/id_rsa",
+  "watch": [],
+  "transport": "scp"
+}
