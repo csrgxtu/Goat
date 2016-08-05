@@ -52,13 +52,5 @@ func GetClcInfo(clc string) (err error, rtv models.Classification) {
     }
   }
 
-  // var criteria = bson.M{"clc_sort_num": bson.M{"$regex": bson.RegEx{".*" + clc + "*.", ""}}}
-  // err = Session.DB(DB).C(ClassificationCollection).Find(criteria).One(&rtv)
-  // if err != nil {
-  //   beego.Info(err)
-  //   err = errors.New("Server Internal Error")
-  //   return
-  // }
-
   return
 }

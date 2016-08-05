@@ -25,5 +25,19 @@ type (
 		Id bson.ObjectId `json:"id" bson:"_id,omitempty"`
 		ClcSortNum string `json:"clc_sort_num" bson:"clc_sort_num"`
 		Description string `json:"description" bson:"description"`
+		Tags []string `json:"tags" bson:"tags"`
+	}
+
+	WechatUsers struct {
+		Id bson.ObjectId `json:"id" bson:"_id,omitempty"`
+		OpenId string `json:"openid" bson:"openid"`
+		NickName string `json:"nickname" bson:"nickname"`
+		Sex bool `json:"sex" bson:"sex"`
+		Language string `json:"language" bson:"language"`
+		City string `json:"city" bson:"city"`
+		Province string `json:"province" bson:"province"`
+		Country string `json:"country" bson:"country"`
+		HeadImgUrl string `json:"headimgurl" bson:"headimgurl"`
+		BookDetailIds []string `json:"bookdetailids" bson:"bookdetailids"`
 	}
 )

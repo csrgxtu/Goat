@@ -16,15 +16,15 @@ var (
 	searcher = engine.Engine{}
 )
 
-func init() {
-  beego.Info("初始化悟空")
-  // 初始化
-  searcher.Init(types.EngineInitOptions{
-    SegmenterDictionaries: "./data/dictionary.txt", StopTokenFile: "./data/stop_tokens.txt", UsePersistentStorage: true, PersistentStorageFolder: "./data", PersistentStorageShards: 20})
-
-  // defer searcher.Close()
-  beego.Info("悟空初始化完毕")
-}
+// func init() {
+//   beego.Info("初始化悟空")
+//   // 初始化
+//   searcher.Init(types.EngineInitOptions{
+//     SegmenterDictionaries: "./data/dictionary.txt", StopTokenFile: "./data/stop_tokens.txt", UsePersistentStorage: true, PersistentStorageFolder: "./data", PersistentStorageShards: 20})
+//
+//   // defer searcher.Close()
+//   beego.Info("悟空初始化完毕")
+// }
 
 // 这个方法将会很耗时间
 func Indexer() (err error, rtv int64) {
