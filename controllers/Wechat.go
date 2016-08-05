@@ -4,6 +4,7 @@ import (
 	"github.com/astaxie/beego"
   "Goat/models"
   "Goat/services"
+  "strconv"
 )
 
 type WechatController struct {
@@ -75,4 +76,64 @@ func (this *WechatController) WebAuth() {
 
   // Successful, redirect with user id
   this.Redirect(beego.AppConfig.String("Wechat_WebAuth_Redirect") + "?userid=" + rtvb, 302)
+}
+
+/**
+ * jssdk 获取signature
+ */
+func (this *WechatController) Signature() {
+  var rt models.Result
+
+  // get ticket
+  err, rtv := services.GetAPIToken()
+  if err != nil {
+    rt.Msg = "o_o"
+    beego.Info(err)
+    this.Ctx.ResponseWriter.WriteHeader(500)
+    this.Data["json"] = &rt
+    this.ServeJSON()
+  }
+
+  erra, rtva := services.GetTicket(rtv)
+  if erra != nil {
+    rt.Msg = "o_o"
+    beego.Info(erra)
+    this.Ctx.ResponseWriter.WriteHeader(500)
+    this.Data["json"] = &rt
+    this.ServeJSON()
+  }
+
+  // get signature
+  var noncestr = beego.AppConfig.String("Wechat_JSSDK_Noncestr")
+  var url = beego.AppConfig.String("Wechat_JSSDK_Url")
+  timestamp, err := strconv.ParseInt(beego.AppConfig.String("Wechat_JSSDK_Timestamp"), 10, 64)
+  if err != nil {
+    rt.Msg = "o_o"
+    beego.Info(err)
+    this.Ctx.ResponseWriter.WriteHeader(500)
+    this.Data["json"] = &rt
+    this.ServeJSON()
+  }
+
+  errc, rtvc := services.GetSignature(noncestr, rtva, url, int64(timestamp))
+  if erra != nil {
+    rt.Msg = "o_o"
+    beego.Info(errc)
+    this.Ctx.ResponseWriter.WriteHeader(500)
+    this.Data["json"] = &rt
+    this.ServeJSON()
+  } else {
+    rt.Msg = "^_^"
+    var data models.JSSDK_Signature
+    data.Nonestr = noncestr
+    data.JSAPI_Ticket = rtva
+    data.Timestamp = int64(timestamp)
+    data.Signature = rtvc
+    data.Url = url
+    rt.Data = make([]models.Recs, 1)
+    rt.Data[0] = data
+  }
+
+  this.Data["json"] = &rt
+  this.ServeJSON()
 }

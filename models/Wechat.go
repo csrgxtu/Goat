@@ -33,4 +33,24 @@ type (
 		Avatar string `json:"headimgurl"`
 		Language string `json:"language"`
 	}
+
+  JSSDK_Ticket struct {
+  	Error_Code int    `json:"errorcode"`
+  	Error_Msg  string `json:"errmsg"`
+  	Ticket     string `json:"ticket"`
+  	Expires_In int    `json:"expires_in"`
+  }
+
+  API_Token struct {
+    ACCESS_TOKEN string `json:"access_token"`
+    EXPIRES_IN uint64 `json:"expires_in"`
+  }
+
+  JSSDK_Signature struct {
+    Nonestr string `json:"noncestr"`
+    JSAPI_Ticket string `json:"jsapi_ticket"`
+    Timestamp int64 `json:"timestamp"`
+    Signature string `json:"signature"`
+    Url string `json:"url"`
+  }
 )
