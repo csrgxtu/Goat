@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"github.com/astaxie/beego"
+  "github.com/astaxie/beego"
   "Goat/models"
   "Goat/services"
   "strconv"
