@@ -8,7 +8,7 @@ import (
 )
 
 type WechatController struct {
-	beego.Controller
+  beego.Controller
 }
 
 /**
