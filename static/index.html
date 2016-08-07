@@ -131,7 +131,7 @@ var url = null;
 var ticket = null;
 var appid = null;
 function GetSignature() {
-  var url = "/goat/wechat/signature";
+  var url = "/goat/wechat/signature/" + this.window.location.href;
   var xhr = new XMLHttpRequest();
   xhr.open("GET", url, false);
   xhr.send(null);
