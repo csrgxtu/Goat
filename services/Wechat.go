@@ -92,7 +92,7 @@ func WechatWebAuthGetWechatUserInfo(token, openid, lang string) (err error, rtv 
 
 
 // jssdk　signature
-func GetTicket(token string) (err error, ticket string) {
+func GetTicket(token string) (err error, rtv models.JSSDK_Ticket) {
   request := gorequest.New()
   var ticketApi = beego.AppConfig.String("Wechat_JSSDK_Ticket")
 
@@ -116,7 +116,8 @@ func GetTicket(token string) (err error, ticket string) {
     err = errors.New("Server Internal Error")
     return
   }
-  ticket = jsonData.Ticket
+  // ticket = jsonData.Ticket
+  rtv = jsonData
 
   return
 }

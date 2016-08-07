@@ -123,7 +123,7 @@ func (this *WechatController) Signature() {
   //   this.ServeJSON()
   // }
 
-  errc, rtvc := services.GetSignature(noncestr, rtva, url, int64(timeElapsed))
+  errc, rtvc := services.GetSignature(noncestr, Ticket.Ticket, url, int64(timeElapsed))
   if errc != nil {
     rt.Msg = "o_o"
     beego.Info(errc)
