@@ -41,7 +41,7 @@ for data in RAW_DATA:
         "description": data.split(',')[1],
         "tags": Tags,
         "main": data.split(',')[2],
-        "img": '/static/img/' + name + ".png"
+        "img": 'https://dev-goat.beautifulreading.com/static/img/' + name + ".png"
     }
     id = cc.insert_one(document).inserted_id
     print id
