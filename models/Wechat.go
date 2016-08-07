@@ -40,7 +40,7 @@ type (
   	Error_Msg  string `json:"errmsg"`
   	Ticket     string `json:"ticket"`
   	Expires_In int    `json:"expires_in"`
-		Timestamp  Time    `json:"timestamp"`
+		Timestamp  time.Time    `json:"timestamp"`
   }
 
   API_Token struct {
