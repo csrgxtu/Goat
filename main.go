@@ -17,5 +17,13 @@ func main() {
 
 	beego.SetStaticPath("/", "static")
 
+	beego.InsertFilter("*", beego.FinishRouter, cors.Allow(&cors.Options{
+				AllowOrigins: []string{"*"},
+				AllowMethods: []string{"*"},
+				AllowHeaders: []string{"Origin"},
+				ExposeHeaders: []string{"Content-Length"},
+				AllowCredentials: true,
+	}))
+
 	beego.Run()
 }
