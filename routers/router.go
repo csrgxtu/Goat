@@ -18,5 +18,5 @@ func init() {
   // wechat
   beego.Router("/goat/wechat/verify", &controllers.WechatController{}, "get:Verify")
   beego.Router("/goat/wechat/webauth", &controllers.WechatController{}, "get:WebAuth")
-  beego.Router("/goat/wechat/signature/:url", &controllers.WechatController{}, "get:Signature")
+  beego.Router("/goat/wechat/signature", &controllers.WechatController{}, "get:Signature")
 }
