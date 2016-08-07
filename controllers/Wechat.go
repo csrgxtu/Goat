@@ -84,6 +84,7 @@ func (this *WechatController) WebAuth() {
 func (this *WechatController) Signature() {
   var rt models.Result
   var url = this.GetString("url")
+  beego.Info(url)
 
   // get ticket
   err, rtv := services.GetAPIToken()
