@@ -4,7 +4,7 @@ import (
   "github.com/astaxie/beego"
   "Goat/models"
   "Goat/services"
-  "strconv"
+  // "strconv"
   "time"
 )
 
@@ -88,7 +88,7 @@ func (this *WechatController) Signature() {
   var url = this.GetString("url")
 
   // 先检测ticket失效没有，若没有，不用重新获取ticket，只需要生成一个signature
-  var timeElapsed = time.Duration.Since(Ticket.Timestamp).Seconds() - float64(Ticket.Expires_In)
+  var timeElapsed = time.Since(Ticket.Timestamp).Seconds() - float64(Ticket.Expires_In)
   if timeElapsed >= 0 {
     // get ticket
     err, rtv := services.GetAPIToken()
@@ -109,7 +109,7 @@ func (this *WechatController) Signature() {
       this.ServeJSON()
     }
     Ticket = rtva
-    Ticket.Timestamp = time.Time.Now()
+    Ticket.Timestamp = time.Now()
   }
 
   // get signature
@@ -124,7 +124,7 @@ func (this *WechatController) Signature() {
   // }
 
   errc, rtvc := services.GetSignature(noncestr, rtva, url, int64(timeElapsed))
-  if erra != nil {
+  if errc != nil {
     rt.Msg = "o_o"
     beego.Info(errc)
     this.Ctx.ResponseWriter.WriteHeader(500)
@@ -134,8 +134,8 @@ func (this *WechatController) Signature() {
     rt.Msg = "^_^"
     var data models.JSSDK_Signature
     data.Nonestr = noncestr
-    data.JSAPI_Ticket = rtva
-    data.Timestamp = int64(timestamp)
+    data.JSAPI_Ticket = Ticket.Ticket
+    data.Timestamp = int64(timeElapsed)
     data.Signature = rtvc
     data.Url = url
     data.AppId = beego.AppConfig.String("Wechat_APPID")
