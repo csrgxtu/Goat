@@ -15,5 +15,7 @@ func main() {
   AllowCredentials: true,
   }))
 
+	beego.SetStaticPath("/", "static")
+
 	beego.Run()
 }
