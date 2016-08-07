@@ -83,6 +83,7 @@ func (this *WechatController) WebAuth() {
  */
 func (this *WechatController) Signature() {
   var rt models.Result
+  var url = this.GetString(":url")
 
   // get ticket
   err, rtv := services.GetAPIToken()
@@ -105,7 +106,7 @@ func (this *WechatController) Signature() {
 
   // get signature
   var noncestr = beego.AppConfig.String("Wechat_JSSDK_Noncestr")
-  var url = beego.AppConfig.String("Wechat_JSSDK_Url")
+  // var url = beego.AppConfig.String("Wechat_JSSDK_Url")
   timestamp, err := strconv.ParseInt(beego.AppConfig.String("Wechat_JSSDK_Timestamp"), 10, 64)
   if err != nil {
     rt.Msg = "o_o"
