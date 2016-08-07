@@ -7,23 +7,23 @@ import (
 )
 
 func main() {
-  // beego.InsertFilter("*", beego.BeforeRouter,cors.Allow(&cors.Options{
-  // AllowOrigins: []string{"*"},
-  // AllowMethods: []string{"*"},
-  // AllowHeaders: []string{"Origin"},
-  // ExposeHeaders: []string{"Content-Length"},
-  // AllowCredentials: true,
-  // }))
+  beego.InsertFilter("*", beego.BeforeRouter,cors.Allow(&cors.Options{
+  AllowOrigins: []string{"*"},
+  AllowMethods: []string{"*"},
+  AllowHeaders: []string{"Origin"},
+  ExposeHeaders: []string{"Content-Length"},
+  AllowCredentials: true,
+  }))
 
 	// beego.SetStaticPath("/", "static")
 
-	beego.InsertFilter("*", beego.FinishRouter, cors.Allow(&cors.Options{
-				AllowOrigins: []string{"*"},
-				AllowMethods: []string{"*"},
-				AllowHeaders: []string{"Origin"},
-				ExposeHeaders: []string{"Content-Length"},
-				AllowCredentials: true,
-	}))
+	// beego.InsertFilter("*", beego.FinishRouter, cors.Allow(&cors.Options{
+	// 			AllowOrigins: []string{"*"},
+	// 			AllowMethods: []string{"*"},
+	// 			AllowHeaders: []string{"Origin"},
+	// 			ExposeHeaders: []string{"Content-Length"},
+	// 			AllowCredentials: true,
+	// }))
 
 	beego.Run()
 }
