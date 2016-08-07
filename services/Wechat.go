@@ -125,7 +125,6 @@ func GetTicket(token string) (err error, rtv models.JSSDK_Ticket) {
 // jssdk signature
 func GetSignature(noncestr, jsapi_ticket, url string, timestamp int64) (err error, signature string) {
   var hashStr = "jsapi_ticket=" + jsapi_ticket + "&noncestr=" + noncestr + "&timestamp=" + strconv.FormatInt(timestamp, 10) + "&url=" + url
-  beego.Info(hashStr)
 
   h := sha1.New()
   io.WriteString(h, hashStr)
