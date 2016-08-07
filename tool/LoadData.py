@@ -29,12 +29,19 @@ with open('tag.csv') as F:
 for data in RAW_DATA:
     print data
     # print data.split(' ')[0], data.split(' ')[1]
+    if len(data.split(',')[3]) == 1:
+        name = '00' + data.split(',')[3]
+    elif len(data.split(',')[3]) == 2:
+        name = '0' + data.split(',')[3]
+    else:
+        name = data.split(',')[3]
+
     document = {
         "clc_sort_num": data.split(',')[0],
         "description": data.split(',')[1],
         "tags": Tags,
         "main": data.split(',')[2],
-        "img": '/static/img/' + data.split(',')[3]
+        "img": '/static/img/' + name + ".png"
     }
     id = cc.insert_one(document).inserted_id
     print id
