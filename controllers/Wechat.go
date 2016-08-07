@@ -5,11 +5,13 @@ import (
   "Goat/models"
   "Goat/services"
   "strconv"
+  "time"
 )
 
 type WechatController struct {
   beego.Controller
 }
+var Ticket models.JSSDK_Ticket
 
 /**
  * 验证微信服务器
@@ -84,40 +86,44 @@ func (this *WechatController) WebAuth() {
 func (this *WechatController) Signature() {
   var rt models.Result
   var url = this.GetString("url")
-  beego.Info(url)
 
-  // get ticket
-  err, rtv := services.GetAPIToken()
-  if err != nil {
-    rt.Msg = "o_o"
-    beego.Info(err)
-    this.Ctx.ResponseWriter.WriteHeader(500)
-    this.Data["json"] = &rt
-    this.ServeJSON()
-  }
+  // 先检测ticket失效没有，若没有，不用重新获取ticket，只需要生成一个signature
+  var timeElapsed = time.Duration.Since(Ticket.Timestamp).Seconds() - float64(Ticket.Expires_In)
+  if timeElapsed >= 0 {
+    // get ticket
+    err, rtv := services.GetAPIToken()
+    if err != nil {
+      rt.Msg = "o_o"
+      beego.Info(err)
+      this.Ctx.ResponseWriter.WriteHeader(500)
+      this.Data["json"] = &rt
+      this.ServeJSON()
+    }
 
-  erra, rtva := services.GetTicket(rtv)
-  if erra != nil {
-    rt.Msg = "o_o"
-    beego.Info(erra)
-    this.Ctx.ResponseWriter.WriteHeader(500)
-    this.Data["json"] = &rt
-    this.ServeJSON()
+    erra, rtva := services.GetTicket(rtv)
+    if erra != nil {
+      rt.Msg = "o_o"
+      beego.Info(erra)
+      this.Ctx.ResponseWriter.WriteHeader(500)
+      this.Data["json"] = &rt
+      this.ServeJSON()
+    }
+    Ticket = rtva
+    Ticket.Timestamp = time.Time.Now()
   }
 
   // get signature
   var noncestr = beego.AppConfig.String("Wechat_JSSDK_Noncestr")
-  // var url = beego.AppConfig.String("Wechat_JSSDK_Url")
-  timestamp, err := strconv.ParseInt(beego.AppConfig.String("Wechat_JSSDK_Timestamp"), 10, 64)
-  if err != nil {
-    rt.Msg = "o_o"
-    beego.Info(err)
-    this.Ctx.ResponseWriter.WriteHeader(500)
-    this.Data["json"] = &rt
-    this.ServeJSON()
-  }
+  // timestamp, err := strconv.ParseInt(, 10, 64)
+  // if err != nil {
+  //   rt.Msg = "o_o"
+  //   beego.Info(err)
+  //   this.Ctx.ResponseWriter.WriteHeader(500)
+  //   this.Data["json"] = &rt
+  //   this.ServeJSON()
+  // }
 
-  errc, rtvc := services.GetSignature(noncestr, rtva, url, int64(timestamp))
+  errc, rtvc := services.GetSignature(noncestr, rtva, url, int64(timeElapsed))
   if erra != nil {
     rt.Msg = "o_o"
     beego.Info(errc)
