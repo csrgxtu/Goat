@@ -69,8 +69,9 @@ wx.ready(function () {
     //   }
     // });
     // alert('已注册获取“分享到朋友圈”状态事件');
-    // title: '', // 分享标题
-    // link: '', // 分享链接
+    title: 'what', // 分享标题
+    link: 'https://dev-heihei.beautifulreading.com', // 分享链接
+    type: 'image',
     imgUrl: 'https://img1.doubanio.com/lpic/s28849368.jpg', // 分享图标
     success: function () {
         // 用户确认分享后执行的回调函数
