@@ -26,6 +26,7 @@ type (
 		ClcSortNum string `json:"clc_sort_num" bson:"clc_sort_num"`
 		Description string `json:"description" bson:"description"`
 		Main string `json:"main" bson:"main"`
+		Img string `json:"img" bson:"img"`
 		Tags []string `json:"tags" bson:"tags"`
 	}
 

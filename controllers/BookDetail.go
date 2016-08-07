@@ -25,11 +25,12 @@ func (this *BookDetailController) SearchBookDetail() {
 		this.Ctx.ResponseWriter.WriteHeader(500)
 	} else {
 		rt.Msg = "^_^"
-		rt.Data = make([]models.Recs, 4)
+		rt.Data = make([]models.Recs, 5)
 		rt.Data[0] = rtv
 		rt.Data[1] = rtvc.Main
-		rt.Data[2] = services.GetTagClouds(rtvc.Tags)
-		_, rt.Data[3] = services.GetUserInfoById(userid)
+		rt.Data[2] = rtvc.Img
+		rt.Data[3] = services.GetTagClouds(rtvc.Tags)
+		_, rt.Data[4] = services.GetUserInfoById(userid)
 	}
 	services.AppendBookDetailId(rtv.Id.Hex(), userid)
 
