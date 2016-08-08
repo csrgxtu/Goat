@@ -29,7 +29,7 @@ func (this *BookDetailController) SearchBookDetail() {
 		rt.Data[0] = rtv
 		rt.Data[1] = rtvc.Main
 		rt.Data[2] = rtvc.Img
-		rt.Data[3] = services.GetTagClouds(rtvc.Tags)
+		rt.Data[3] = services.GetTagClouds(rtvc.TagA)
 		_, rt.Data[4] = services.GetUserInfoById(userid)
 	}
 	services.AppendBookDetailId(rtv.Id.Hex(), userid)

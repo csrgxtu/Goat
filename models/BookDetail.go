@@ -27,7 +27,8 @@ type (
 		Description string `json:"description" bson:"description"`
 		Main string `json:"main" bson:"main"`
 		Img string `json:"img" bson:"img"`
-		Tags []string `json:"tags" bson:"tags"`
+		TagA []string `json:"taga" bson:"taga"`
+		TagB []string `json:"tagb" bson:"tagb"`
 	}
 
 	// 微信授权的用户

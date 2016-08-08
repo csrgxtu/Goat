@@ -19,11 +19,15 @@ with open('test.csv') as F:
     for line in F:
         RAW_DATA.append(line.strip('\n\r'))
 
-Tags = []
-with open('tag.csv') as F:
+TagsA = []
+with open('taga.csv') as F:
     for line in F:
-        Tags.append(line.strip('\n'))
+        TagsA.append(line.strip('\n'))
 
+TagsB = []
+with open('tagb.csv') as F:
+    for line in F:
+        TagsB.append(line.strip('\n'))
 
 # print RAW_DATA
 for data in RAW_DATA:
@@ -39,9 +43,10 @@ for data in RAW_DATA:
     document = {
         "clc_sort_num": data.split(',')[0],
         "description": data.split(',')[1],
-        "tags": Tags,
         "main": data.split(',')[2],
-        "img": 'http://7xj2i2.com2.z0.glb.qiniucdn.com/' + name + ".png"
+        "img": 'http://7xj2i2.com2.z0.glb.qiniucdn.com/' + name + ".png",
+        "taga": TagsA,
+        "tagb": TagsB
     }
     id = cc.insert_one(document).inserted_id
     print id
