@@ -16,8 +16,6 @@ func SearchBookdetail(query string) (err error, rtv models.BookDetail, rtvc mode
     return
   }
 
-  beego.Info("Query: " + query)
-
   var criteria = bson.M{"title": query}
   err = Session.DB(DB).C(BookDetailCollection).Find(criteria).One(&rtv)
   if err != nil {
@@ -30,12 +28,14 @@ func SearchBookdetail(query string) (err error, rtv models.BookDetail, rtvc mode
     }
   }
   // 是在搜不到，就按照V2来搜
-  criteria = bson.M{"clc_sort_num": bson.M{"$regex": bson.RegEx{".*V2*.", ""}}}
-  err = Session.DB(DB).C(BookDetailCollection).Find(criteria).One(&rtv)
   if err != nil {
-    beego.Info(err)
-    err = errors.New("Server Internal Error")
-    return
+    criteria = bson.M{"clc_sort_num": bson.M{"$regex": bson.RegEx{".*V2*.", ""}}}
+    err = Session.DB(DB).C(BookDetailCollection).Find(criteria).One(&rtv)
+    if err != nil {
+      beego.Info(err)
+      err = errors.New("Server Internal Error")
+      return
+    }
   }
 
   // 在classification里面寻找主文案，标签云
