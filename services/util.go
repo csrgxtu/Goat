@@ -3,7 +3,14 @@ package services
 import (
 	"github.com/astaxie/beego"
 	"math/rand"
+	"time"
 )
+
+func RangeRandomFloat(min, max int) (rtv float64) {
+	rand.Seed(time.Now().Unix())
+	rtv = float64(rand.Intn(max - min) + min)
+	return
+}
 
 func getTagsByLength(tags []string, length int) (Tags []string) {
 	for ix, value := range tags {

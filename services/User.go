@@ -188,5 +188,10 @@ func GetSimiliar(id string) (err error, rtv []models.WechatUsers) {
     }
   }
 
+  // 上面计算的相似度因为用户书籍等数据太少，所以肖总要求使用80-99之间的随机数替代，不过上面代码我不删除
+  for i := 0; i < 3; i++ {
+    rtv[i].Similiraty = RangeRandomFloat(80, 99)
+  }
+
   return
 }
