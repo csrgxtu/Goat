@@ -12,8 +12,8 @@ from pymongo import MongoClient
 # connect to mongodb
 # client = MongoClient('mongodb://127.0.0.1:27017/bookshelf')
 pclient = MongoClient('mongodb://rio:VFZPhT7y@192.168.200.22:27017/bookshelf')
-client = MongoClient('mongodb://192.168.100.2:27017/bookshelf')
-# client = MongoClient('mongodb://rio:VFZPhT7y@192.168.200.22:27017/bookshelf')
+# client = MongoClient('mongodb://192.168.100.2:27017/bookshelf')
+client = MongoClient('mongodb://rio:VFZPhT7y@192.168.200.22:27017/bookshelf')
 db = client['bookshelf']
 pdb = pclient['bookshelf']
 wc = db['wechatuser']

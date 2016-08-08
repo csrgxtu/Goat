@@ -24,8 +24,16 @@ func SearchBookdetail(query string) (err error, rtv models.BookDetail, rtvc mode
     if err != nil {
       beego.Info(err)
       err = errors.New("Server Internal Error")
-      return
+      // return
     }
+  }
+  // 是在搜不到，就按照V2来搜
+  criteria = bson.M{"clc_sort_num": bson.M{"$regex": bson.RegEx{".*V2*.", ""}}}
+  err = Session.DB(DB).C(BookDetailCollection).Find(criteria).One(&rtv)
+  if err != nil {
+    beego.Info(err)
+    err = errors.New("Server Internal Error")
+    return
   }
 
   // 在classification里面寻找主文案，标签云
