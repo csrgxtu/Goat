@@ -16,6 +16,8 @@ func SearchBookdetail(query string) (err error, rtv models.BookDetail, rtvc mode
     return
   }
 
+  beego.Info("Query: " + query)
+
   var criteria = bson.M{"title": query}
   err = Session.DB(DB).C(BookDetailCollection).Find(criteria).One(&rtv)
   if err != nil {
