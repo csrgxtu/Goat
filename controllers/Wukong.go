@@ -45,7 +45,15 @@ func (this *WukongController) Searcher() {
 		rt.Data[0] = rtv
 		rt.Data[1] = rtvc.Main
 		rt.Data[2] = rtvc.Img
-		rt.Data[3] = services.GetTagClouds(rtvc.TagA)
+		// 随机选择A类活着B类标签
+		if int(services.RangeRandomFloat(0, 1)) == 0 {
+			beego.Info("chose a tag")
+			rt.Data[3] = services.GetTagClouds(rtvc.TagA)
+		} else {
+			beego.Info("chose b tag")
+			rt.Data[3] = services.GetTagClouds(rtvc.TagB)
+		}
+		// rt.Data[3] = services.GetTagClouds(rtvc.TagA)
 		_, rt.Data[4] = services.GetUserInfoById(userid)
 	}
 	services.AppendBookDetailId(rtv.Id.Hex(), userid)
