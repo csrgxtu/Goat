@@ -5,7 +5,7 @@ import (
   "gopkg.in/mgo.v2/bson"
   "Goat/models"
   "errors"
-  "strings"
+  // "strings"
 )
 
 var BookDetailCollection = beego.AppConfig.String("BookDetailCollection")
