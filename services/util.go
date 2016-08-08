@@ -7,7 +7,8 @@ import (
 )
 
 func RangeRandomFloat(min, max int) (rtv float64) {
-	rand.Seed(time.Now().Unix())
+	// rand.Seed(time.Now().Unix())
+	rand.Seed(rand.Int63())
 	rtv = float64(rand.Intn(max - min) + min)
 	return
 }
