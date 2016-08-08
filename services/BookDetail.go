@@ -47,9 +47,9 @@ func GetClcInfo(clc string) (err error, rtv models.Classification) {
     return
   }
 
-  if strings.Index(clc, ".") > 0 {
-    clc = clc[0:strings.Index(clc, ".")]
-  }
+  // if strings.Index(clc, ".") > 0 {
+  //   clc = clc[0:strings.Index(clc, ".")]
+  // }
 
   for i := 0; i < len(clc); i++ {
     // beego.Info(clc[0:len(clc) - i])
