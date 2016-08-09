@@ -22,12 +22,12 @@ with open('test.csv') as F:
 TagsA = []
 with open('taga.csv') as F:
     for line in F:
-        TagsA.append(line.strip('\n'))
+        TagsA.append(line.strip('\n\r'))
 
 TagsB = []
 with open('tagb.csv') as F:
     for line in F:
-        TagsB.append(line.strip('\n'))
+        TagsB.append(line.strip('\n\r'))
 
 # print RAW_DATA
 for data in RAW_DATA:
