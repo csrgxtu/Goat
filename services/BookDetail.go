@@ -52,7 +52,11 @@ func SearchBookdetail(query string) (err error, rtv models.BookDetail, rtvc mode
     err, rtvc = GetClcInfo("default")
   } else {
     // 在classification里面寻找主文案，标签云
-    err, rtvc = GetClcInfo(rtv.ClcSortNum)
+    if len(rtv.ClcSortNum) > 0 {
+      err, rtvc = GetClcInfo(rtv.ClcSortNum)
+    } else {
+      err, rtvc = GetClcInfo("default")
+    }
   }
 
   return
