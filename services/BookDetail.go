@@ -20,6 +20,7 @@ func SearchBookdetail(query string) (err error, rtv models.BookDetail, rtvc mode
   var criteria = bson.M{"title": query}
   erra := Session.DB(DB).C(BookDetailCollection).Find(criteria).One(&rtv)
   if erra != nil {
+    beego.Info(erra)
     criteria = bson.M{"title": bson.M{"$regex": bson.RegEx{".*" + query + "*.", ""}}}
     errb = Session.DB(DB).C(BookDetailCollection).Find(criteria).One(&rtv)
     if errb != nil {
@@ -47,7 +48,9 @@ func SearchBookdetail(query string) (err error, rtv models.BookDetail, rtvc mode
   }
 
   // 在classification里面寻找主文案，标签云
+  beego.Info(rtv.ClcSortNum)
   err, rtvc = GetClcInfo(rtv.ClcSortNum)
+  beego.Info(err)
 
   return
 }
@@ -63,7 +66,9 @@ func GetClcInfo(clc string) (err error, rtv models.Classification) {
 
   for i := 0; i < len(clc); i++ {
     // beego.Info(clc[0:len(clc) - i])
-    var criteria = bson.M{"clc_sort_num": clc[0:len(clc) - i]}
+    // criteria = bson.M{"clc_sort_num": bson.M{"$regex": bson.RegEx{".*V2*.", ""}}}
+
+    var criteria = bson.M{"clc_sort_num": bson.M{"$regex": bson.RegEx{".*" + clc[0:len(clc) - i] + "*.", ""}}}
     err = Session.DB(DB).C(ClassificationCollection).Find(criteria).One(&rtv)
     if err == nil {
       break
