@@ -37,9 +37,6 @@ func (this *BookDetailController) SearchBookDetail() {
 			beego.Info("chose b tag")
 			rt.Data[3] = services.GetTagClouds(rtvc.TagB)
 		}
-		// beego.Info(rtvc.TagA)
-		// beego.Info(len(rtvc.TagA))
-		// rt.Data[3] = services.GetTagClouds(rtvc.TagA)
 
 		_, rt.Data[4] = services.GetUserInfoById(userid)
 	}
