@@ -92,7 +92,7 @@ func GetSimiliar(id string) (err error, rtv []models.WechatUsers) {
 
   // 查询共同书籍用户
   var wechatUsers []models.WechatUsers
-  criteria = bson.M{"bookdetailids": bson.M{"$in": wechatUser.BookDetailIds}, "_id": bson.M{"$ne": bson.ObjectIdHex(id)}}
+  criteria = bson.M{"bookdetailids": bson.M{"$in": wechatUser.BookDetailIds}, "_id": bson.M{"$ne": bson.ObjectIdHex(id)}, "sex": bson.M{"$ne": wechatUser.Sex}}
   err = Session.DB(DB).C(WechatUsersCollection).Find(criteria).All(&wechatUsers)
   if err != nil {
     // 找不到

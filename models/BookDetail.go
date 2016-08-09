@@ -48,6 +48,9 @@ type (
 		Country string `json:"country" bson:"country"`
 	}
 
+	// 调用周光耀的接口，将该用户创建成美丽阅读用户
+	
+
 	// 美丽阅读的用户
 	BRUsers struct {
 		Id bson.ObjectId `json:"id" bson:"_id,omitempty"`
