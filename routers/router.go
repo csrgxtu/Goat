@@ -7,6 +7,7 @@ import (
 
 func init() {
 	beego.Router("/goat/bookdetail/:query/:userid", &controllers.BookDetailController{}, "get:SearchBookDetail")
+	beego.Router("/goat/bookdetail/default/:query/:userid", &controllers.BookDetailController{}, "get:SearchBookdetailDefault")
 	beego.Router("/goat/classification/:clc_sort_num", &controllers.BookDetailController{}, "get:GetClcInfo")
 	beego.Router("/goat/indexer", &controllers.WukongController{}, "get:Indexer")
 	beego.Router("/goat/searcher/:query/:userid", &controllers.WukongController{}, "get:Searcher")

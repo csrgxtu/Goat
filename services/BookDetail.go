@@ -11,6 +11,23 @@ import (
 var BookDetailCollection = beego.AppConfig.String("BookDetailCollection")
 var ClassificationCollection = beego.AppConfig.String("ClassificationCollection")
 
+func SearchBookdetailDefault(query string) (err error, rtv models.BookDetail, rtvc models.Classification) {
+  if CheckAndReconnect() != nil {
+    return
+  }
+
+  var criteria = bson.M{"clc_sort_num": bson.M{"$ne": nil}}
+  err = Session.DB(DB).C(BookDetailCollection).Find(criteria).One(&rtv)
+  if err != nil {
+    beego.Info(err)
+    err = errors.New("Server Internal Error")
+    return
+  }
+
+  err, rtvc = GetClcInfo("default")
+  return
+}
+
 func SearchBookdetail(query string) (err error, rtv models.BookDetail, rtvc models.Classification) {
   if CheckAndReconnect() != nil {
     return
