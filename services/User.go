@@ -113,7 +113,7 @@ func GetSimiliar(id string) (err error, rtv []models.WechatUsers) {
   }
   // 对上述结果进行排序，取出前三,  否则去找默认用户，下面的代码之所以这么长，是因为产品的奇怪需求
   sort.Sort(tmpStruct)
-  beego.Info(tmpStruct)
+  // beego.Info(tmpStruct)
   if len(tmpStruct) == 0 {
     // 取三个异性用户
     beego.Info(wechatUser.Sex)
