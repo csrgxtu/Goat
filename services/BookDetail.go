@@ -80,6 +80,7 @@ func SearchBookdetail(query string) (err error, rtv models.BookDetail, rtvc mode
 }
 
 func GetClcInfo(clc string) (err error, rtv models.Classification) {
+  beego.Info(clc)
   if CheckAndReconnect() != nil {
     return
   }
