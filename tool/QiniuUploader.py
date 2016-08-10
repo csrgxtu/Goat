@@ -5,8 +5,8 @@ from qiniu import Auth, put_file, etag, urlsafe_base64_encode
 import qiniu.config
 
 #需要填写你的 Access Key 和 Secret Key
-access_key = ''
-secret_key = ''
+access_key = '_4TUdWfMQGZ5f2DFFmXbARs7pQLWmiPK-IFbSsw5'
+secret_key = '1x0lUvV11qxbWQO1G_XrMm6v-MSsDWJWNCJk2K67'
 
 #构建鉴权对象
 q = Auth(access_key, secret_key)
@@ -14,7 +14,7 @@ q = Auth(access_key, secret_key)
 #要上传的空间
 bucket_name = 'brpublic'
 
-Files = ["re161.png"]
+Files = ["rere161.png"]
 # with open('names.csv') as F:
 #     for line in F:
 #         Files.append(line.strip('\n'))
