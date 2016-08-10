@@ -65,19 +65,21 @@ func SearchBookdetail(query string) (err error, rtv models.BookDetail, rtvc mode
   // }
 
   // 如果找不到，使用默认的
+  var DefaultClc = ["default", "Z2", "Z3", "Q95", "Q94", "I27", "I287.8", "I287.45"]
   if errb != nil {
-    err, rtvc = GetClcInfo("default")
+
+    err, rtvc = GetClcInfo(DefaultClc[int(RangeRandomFloat(0, 8))])
   } else {
     // 在classification里面寻找主文案，标签云
     if len(rtv.ClcSortNum) > 0 {
       err, rtvc = GetClcInfo(rtv.ClcSortNum)
     } else {
-      err, rtvc = GetClcInfo("default")
+      err, rtvc = GetClcInfo(DefaultClc[int(RangeRandomFloat(0, 8))])
     }
   }
 
   if err != nil {
-    err, rtvc = GetClcInfo("default")
+    err, rtvc = GetClcInfo(DefaultClc[int(RangeRandomFloat(0, 8))])
   }
 
   return
