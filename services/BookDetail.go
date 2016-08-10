@@ -65,7 +65,7 @@ func SearchBookdetail(query string) (err error, rtv models.BookDetail, rtvc mode
   // }
 
   // 如果找不到，使用默认的
-  var DefaultClc = ["default", "Z2", "Z3", "Q95", "Q94", "I27", "I287.8", "I287.45"]
+  DefaultClc := [8]string{"default", "Z2", "Z3", "Q95", "Q94", "I27", "I287.8", "I287.45"}
   if errb != nil {
 
     err, rtvc = GetClcInfo(DefaultClc[int(RangeRandomFloat(0, 8))])
