@@ -1,10 +1,6 @@
 ## Guldan
 微服务 -- 书籍图片扫描相关的接口(公司内部后台使用的几个后台使用的图片扫描接口逻辑混乱)
 
-|  Port |  dev |  prod |
-|--:|---|---|
-|  9007 |  dev-guldan.beautifulreading.com |  guldan.beautifulreading.com |
-
 ### How To Start
 ```bash
 # First, clone the code
