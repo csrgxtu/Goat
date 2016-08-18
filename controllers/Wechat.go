@@ -28,6 +28,7 @@ func (this *WechatController) Verify() {
 func (this *WechatController) WebAuth() {
   var rt models.Result
   var code = this.GetString("code")
+  var state = this.GetString("state") // contains dynamica redirect url
 
   // 授权失败，没有code，无法继续后面的拉取用户信息操作
   if len(code) == 0 {
@@ -79,7 +80,8 @@ func (this *WechatController) WebAuth() {
   // Successful, redirect with user id
   beego.Info("Redirecting...")
   beego.Info(beego.AppConfig.String("Wechat_WebAuth_Redirect"))
-  this.Redirect(beego.AppConfig.String("Wechat_WebAuth_Redirect") + "?userid=" + rtvb, 302)
+  // this.Redirect(beego.AppConfig.String("Wechat_WebAuth_Redirect") + "?userid=" + rtvb, 302)
+  this.Redirect(state + "?userid=" + rtvb, 302)
 }
 
 /**
