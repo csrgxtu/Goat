@@ -14,7 +14,7 @@ q = Auth(access_key, secret_key)
 #要上传的空间
 bucket_name = 'brpublic'
 
-Files = ["rere161.png"]
+Files = ["re197.png"]
 # with open('names.csv') as F:
 #     for line in F:
 #         Files.append(line.strip('\n'))

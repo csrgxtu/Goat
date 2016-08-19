@@ -68,6 +68,7 @@ func (this *WechatController) WebAuth() {
   user.Province = rtva.Province
   user.City = rtva.City
   user.Country = rtva.Country
+  user.CreateTime = time.Now()
   errb, rtvb := services.CreateWechatUser(user)
   if errb != nil {
     rt.Msg = "o_o"
