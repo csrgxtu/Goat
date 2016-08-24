@@ -83,15 +83,15 @@ func GetTagClouds(tags []string) (Tags [][]string) {
 		data2d = append(data2d, a2dn[i])
 	}
 	var data3d = []string{""}
-	for i := 0; i < 5; i++ {
+	for i := 0; i < 8; i++ {
 		data3d = append(data3d, a3dn[i])
 	}
 	var data4d = []string{""}
-	for i := 0; i < 5; i++ {
+	for i := 0; i < 8; i++ {
 		data4d = append(data4d, a4dn[i])
 	}
 	var data5d = []string{""}
-	for i := 0; i < 3; i++ {
+	for i := 0; i < 1; i++ {
 		data5d = append(data5d, a5dn[i])
 	}
 	var data6d = []string{a6dn[0]}
