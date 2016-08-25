@@ -106,6 +106,89 @@ func GetTagClouds(tags []string) (Tags [][]string) {
 	return
 }
 
+// 返回过一集需要的标签云
+func GetTagCloudsv1(tags []string) (Tags [][]string) {
+	var a2d = []string{""} // 2个长度的标签
+	var a3d = []string{""}
+	var a4d = []string{""}
+	var a5d = []string{""}
+	var a6d = []string{""}
+
+	for _, value := range tags {
+		if len(value) == 6 {
+			a2d = append(a2d, value)
+		} else if len(value) == 9 {
+			a3d = append(a3d, value)
+		} else if len(value) == 12 {
+			a4d = append(a4d, value)
+		} else if len(value) == 15 {
+			a5d = append(a5d, value)
+		} else if len(value) == 18 {
+			a6d = append(a6d, value)
+		}
+	}
+
+	// 打乱各个数组
+	a2dn := make([]string, len(a2d[1:]))
+	perm := rand.Perm(len(a2d[1:]))
+	for i, v := range perm {
+	    a2dn[v] = a2d[i + 1]
+	}
+
+
+	a3dn := make([]string, len(a3d[1:]))
+	perm = rand.Perm(len(a3d[1:]))
+	for i, v := range perm {
+			a3dn[v] = a3d[i + 1]
+	}
+
+	a4dn := make([]string, len(a4d[1:]))
+	perm = rand.Perm(len(a4d[1:]))
+	for i, v := range perm {
+			a4dn[v] = a4d[i + 1]
+	}
+
+	a5dn := make([]string, len(a5d[1:]))
+	perm = rand.Perm(len(a5d[1:]))
+	for i, v := range perm {
+			a5dn[v] = a5d[i + 1]
+	}
+
+	beego.Info("here")
+	a6dn := make([]string, len(a6d[1:]))
+	perm = rand.Perm(len(a6d[1:]))
+	for i, v := range perm {
+			a6dn[v] = a6d[i + 1]
+	}
+
+	var data2d = []string{""}
+	for i := 0; i < 15; i++ {
+		data2d = append(data2d, a2dn[i])
+	}
+	var data3d = []string{""}
+	for i := 0; i < 5; i++ {
+		data3d = append(data3d, a3dn[i])
+	}
+	var data4d = []string{""}
+	for i := 0; i < 5; i++ {
+		data4d = append(data4d, a4dn[i])
+	}
+	var data5d = []string{""}
+	for i := 0; i < 3; i++ {
+		data5d = append(data5d, a5dn[i])
+	}
+	var data6d = []string{a6dn[0]}
+
+	Tags = make([][]string, 5)
+	Tags[0] = data2d[1:]
+	Tags[1] = data3d[1:]
+	Tags[2] = data4d[1:]
+	Tags[3] = data5d[1:]
+	Tags[4] = data6d
+
+	return
+}
+
 type SortStruct struct {
 	Key string
 	Value int
