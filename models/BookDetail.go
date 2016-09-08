@@ -46,10 +46,11 @@ type (
 		City string `json:"city" bson:"city"`
 		Province string `json:"province" bson:"province"`
 		Country string `json:"country" bson:"country"`
+		CreateTime time.Time `json:"createtime" bson:"createtime"`
 	}
 
 	// 调用周光耀的接口，将该用户创建成美丽阅读用户
-	
+
 
 	// 美丽阅读的用户
 	BRUsers struct {

@@ -46,7 +46,8 @@ for data in RAW_DATA:
         "main": data.split(',')[2],
         "img": 'http://7xj2i2.com2.z0.glb.qiniucdn.com/' + name + ".png",
         "taga": TagsA,
-        "tagb": TagsB
+        "tagb": TagsB,
+        "createtime": "2016-08-11"
     }
     id = cc.insert_one(document).inserted_id
     print id
