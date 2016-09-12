@@ -80,7 +80,8 @@ func (this *WechatController) WebAuth() {
 
   // Successful, redirect with user id
   beego.Info("Redirecting...")
-  beego.Info(beego.AppConfig.String("Wechat_WebAuth_Redirect"))
+  beego.Info(state)
+  // beego.Info(beego.AppConfig.String("Wechat_WebAuth_Redirect"))
   // this.Redirect(beego.AppConfig.String("Wechat_WebAuth_Redirect") + "?userid=" + rtvb, 302)
   this.Redirect(state + "?userid=" + rtvb, 302)
 }
